@@ -1,0 +1,1204 @@
+{
+  "info": {
+    "_postman_id": "19f261d8-e00a-4003-90d0-3292eff7d8c0",
+    "name": "API Testing using Postman",
+    "description": "This project demonstrates end-to-end API testing of a User Management system  \ncovering Users, Resources and Authentication modules. Testing includes  \nfunctional validation, negative scenarios, input validation, status code  \nverification and response structure validation.\n\nThe collection validates User Management REST APIs using Postman.\n\nScope:\n\n1.Create User\n\n2.Get User Details\n\n3.Update User\n\n4.Delete User\n\nValidation Includes:\n\n1.Status Code Validation\n\n2.Response body validation\n\n3.Schema validation\n\n4.Negative test cases\n\n5.Automated tests using pm.test\n\nEnvironment Driven Excecution using base_url variable.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52835001",
+    "_collection_link": "https://go.postman.co/collection/52835001-19f261d8-e00a-4003-90d0-3292eff7d8c0?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get user details- Valid ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/users?page=2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "2"
+            }
+          ]
+        },
+        "description": "The request verifies that the Users API returns a paginated list of users for page number 2."
+      },
+      "response": []
+    },
+    {
+      "name": "GET Single User-Valid ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/users/2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "2"
+          ]
+        },
+        "description": "The request validates retrieval of a specific user using a valid user ID. The API should return complete user details including id, email, first name,last name and avatar with HTTP 200 response."
+      },
+      "response": []
+    },
+    {
+      "name": "GET Single User - Invalid ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/users/23",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "23"
+          ]
+        },
+        "description": "The negative test verifies system behavior when requesting a non-existing user ID. The API should return HTTP 404 Not Found and no user object in the response body."
+      },
+      "response": []
+    },
+    {
+      "name": "Create User- valid data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"John\",\r\n    \"job\": \"Engineer\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users"
+          ]
+        },
+        "description": "The request validates successful user creation using valid name and job fields. The API should create the user and return generated id and creation timestamp with HTTP 201 response."
+      },
+      "response": []
+    },
+    {
+      "name": "Create User-Missing job field",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users"
+          ]
+        },
+        "description": "The negative test checks whether the API enforces mandatory fields during user creation.When job attribute is missing,the API is expected to reject the request with validaition error and HTTP 400 response."
+      },
+      "response": []
+    },
+    {
+      "name": "Create User- Empty Body",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users"
+          ]
+        },
+        "description": "The negative test validates API behavior when an empty payload is sent during user creation. The server should reject the request and return HTTP 400 Bad Request."
+      },
+      "response": []
+    },
+    {
+      "name": "Update User - Valid Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 00\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Jane\",\r\n    \"job\": \"Manager\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/users/2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "2"
+          ]
+        },
+        "description": "The request verifies successful update of an existing user using valid name and job values. The API should update the record and return updated timestamp with HTTP 200 response."
+      },
+      "response": []
+    },
+    {
+      "name": "Update User - Missing Fields",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/users/2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "2"
+          ]
+        },
+        "description": "The negative test verifies validation handling when required fields are missing during update operation. The API should reject incomplete payload and return HTTP 400."
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE User - Valid ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 204\", function () {\r",
+              "    pm.response.to.have.status(204);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/users/2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "2"
+          ]
+        },
+        "description": "The request verifies successful deletion of an existing user. The API should remove the user and return HTTP 204 No Content."
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE User - Invalid User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 204\", function () {\r",
+              "    pm.response.to.have.status(204);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/users/23",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "23"
+          ]
+        },
+        "description": "The negative test validates API response when attempting to delete a non-existing user. The server should return HTTP 404 Resource Not Found."
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Resources",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/unknown",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "unknown"
+          ]
+        },
+        "description": "The request validates retrieval of available resource list. The API should return a collection of resources with HTTP 200 response."
+      },
+      "response": []
+    },
+    {
+      "name": "GET Resource - Valid ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/unknown/2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "unknown",
+            "2"
+          ]
+        },
+        "description": "The request verifies that valid resource ID returns correct resource details."
+      },
+      "response": []
+    },
+    {
+      "name": "GET Resource - Invalid ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/unkown/23",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "unkown",
+            "23"
+          ]
+        },
+        "description": "The negative test checks API behavior for non-existing resource ID. Expected result is HTTP 404 response."
+      },
+      "response": []
+    },
+    {
+      "name": "Register User - Valid Data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "register"
+          ]
+        },
+        "description": "The request validates successful user registration using valid email and password. The API should generate user ID and authentication token."
+      },
+      "response": []
+    },
+    {
+      "name": "Register without Password",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\": \"sydney@fife\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "register"
+          ]
+        },
+        "description": "The negative test verifies mandatory password validation during registration. API should reject request with HTTP 400 error."
+      },
+      "response": []
+    },
+    {
+      "name": "Login Valid Credentials",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "login"
+          ]
+        },
+        "description": "The request validates successful login using registered credentials. API should return authentication token with HTTP 200 response."
+      },
+      "response": []
+    },
+    {
+      "name": "Login Without Password",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\": \"peter@klaven\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/login",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "login"
+          ]
+        },
+        "description": "The negative test verifies login validation when password is missing. API should return HTTP 400 error."
+      },
+      "response": []
+    },
+    {
+      "name": "Pagination Page 1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/users?page=01",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "01"
+            }
+          ]
+        },
+        "description": "The request validates pagination functionality by requesting page 1. API should return first page user list successfully."
+      },
+      "response": []
+    },
+    {
+      "name": "GET User ID 1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/users/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        },
+        "description": "This request verifies that invalis user ID 1 returns correct user details."
+      },
+      "response": []
+    },
+    {
+      "name": "Update User Details",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"Madhumala\",\r\n    \"job\": \"Tester\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/users/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        },
+        "description": "The request validates updating user details with new values and verifies updated timestamp is returned."
+      },
+      "response": []
+    },
+    {
+      "name": "Delete User 1",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 204\", function () {\r",
+              "    pm.response.to.have.status(204);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users"
+          ]
+        },
+        "description": "The test verifies deletion status code correctness. API should return HTTP 204 but incorrect status code indicates defect."
+      },
+      "response": []
+    },
+    {
+      "name": "Create User Numeric Values",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"123\",\r\n    \"job\": \"123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users"
+          ]
+        },
+        "description": "The negative test verifies input validation by sending numeric values in name and job fields. API should reject invalid datatype input."
+      },
+      "response": []
+    },
+    {
+      "name": "Create User Special Characters",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"!@#\",\r\n    \"job\": \"$%&\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/users",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users"
+          ]
+        },
+        "description": "The negative test validates input sanitization by sending special characters. API should reject invalid characters and return validation error."
+      },
+      "response": []
+    },
+    {
+      "name": "Validate Resource Response Structure",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/unknown",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "unknown"
+          ]
+        },
+        "description": "The request validates JSON schema structure of resource list including required attributes and data types."
+      },
+      "response": []
+    },
+    {
+      "name": "Fetch Non-Existing Resource",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-api-key",
+            "value": "reqres_d1047d0145694bfb99edf21a5b3afd18",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/unknown/999",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "unknown",
+            "999"
+          ]
+        },
+        "description": "The negative test ensures proper handling of unavailable resource and API returns HTTP 404 response."
+      },
+      "response": []
+    }
+  ]
+}
