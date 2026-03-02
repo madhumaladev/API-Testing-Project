@@ -1,7 +1,5 @@
 # API-Testing-Project
 API Testing Project Using POSTMAN
-
-
 1. PROJECT OVERVEIW
    Manual and API Testing performed on User Management Module.
 
